@@ -1,0 +1,22 @@
+services:
+  frontend:
+    build: .
+    platform: linux/amd64
+    ports:
+      - 80:3000
+    environment:
+      REACT_APP_API_ENDPOINT: ${REACT_APP_API_ENDPOINT}
+      REACT_APP_GEOJSON_ENDPOINT: ${REACT_APP_GEOJSON_ENDPOINT}
+      REACT_APP_MAPBOX_TOKEN: ${REACT_APP_MAPBOX_TOKEN}
+      REACT_APP_MAPBOX_STYLE: ${REACT_APP_MAPBOX_STYLE}
+    container_name: nte_fe_build
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /src
+    stdin_open: true
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    restart: always
